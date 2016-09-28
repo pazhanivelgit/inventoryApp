@@ -1,0 +1,13 @@
+﻿{
+    "CLIENT_ID": "6n7wmx04cgx38kktr1tsh7l1ddc3vx9c",
+    "CLIENT_SECRET": "GaQPNDO4lSaYPpSou2pXyf88AQER6JDD",
+    "PUBLIC_KEY_ID": "dnftr90b",
+    "PRIVATE_KEY_PATH": "../public/private_key.pem",
+    "PRIVATE_KEY_PASSPHRASE": "RSA_SHA_256",
+    "ENTERPRISE_ID": "967277",
+    "ADMIN_ID": "278449977",
+    "MAIL": {
+        "SENDER": "pwadmin@perkinwill.com",
+        "SEND_GRID_APIKEY": "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"
+    }
+}

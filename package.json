@@ -1,0 +1,23 @@
+{
+  "name": "Inventory_App",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node server.js"
+  },
+  "description": "Node application for Inventory ",
+  "main": "server.js",
+  "author": "vel",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.0.1",
+    "body-parser": "^1.15.2",
+    "express": "^4.13.4",
+    "mongoose": "^4.5.7",
+    "morgan": "^1.6.1",
+    "path": "^0.12.7",
+    "request": "^2.74.0",
+    "sendgrid": "^4.0.1",
+    "winston": "^2.2.0"
+  }
+}
