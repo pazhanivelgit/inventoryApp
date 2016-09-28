@@ -8,7 +8,9 @@ app.config(['$routeProvider',
       templateUrl: 'partials/products.html',
       controller: 'productsCtrl'
     })
-    .otherwise({
-      redirectTo: '/'
-    });;
+    .when('/productItems', {
+      title: 'Product Item',
+      templateUrl: 'partials/productItems.html',
+      controller: 'productItemsCtrl'
+    });
 }]);

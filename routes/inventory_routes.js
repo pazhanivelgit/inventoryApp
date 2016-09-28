@@ -9,6 +9,39 @@ var exculdeFields = {
 };
 
 
+function getItemsByProductId(req, res, next)
+{
+    //var pid=req.query.productId;
+    return res.status(200).json([
+            {
+                "item_id":4932,
+                "qty": 10,
+                "buy_price": 90.5,
+                "sell_price": 95,
+                "expiry_date": "aug10",
+                "vendor_name": "AKS"
+            },
+            {
+                "item_id":4933,
+                "qty": 20,
+                "buy_price": 90.5,
+                "sell_price": 95,
+                "expiry_date": "aug10",
+                "vendor_name": "AKS"
+            },
+            {
+                "item_id":4934,
+                "qty": 20,
+                "buy_price": 90.5,
+                "sell_price": 95,
+                "expiry_date": "aug10",
+                "vendor_name": "AKS"
+            }
+        ]
+        );
+}
+
+
 function routeGetInventoryRequest(req, res, next) {
     return res.status(200).json([{
         "product_id": 16237812,
@@ -48,7 +81,7 @@ function routeGetInventoryRequest(req, res, next) {
     );
 }
 
-router.get(basePath + '/products/:id', routeGetInventoryRequest);
+router.get(basePath + '/products/:id', getItemsByProductId);
 router.get(basePath + '/products', routeGetInventoryRequest);
 
 

@@ -1,14 +1,10 @@
-app.controller('productsCtrl', function ($scope, $modal, $filter,$location, dataService) {
+app.controller('productItemsCtrl', function ($scope, $modal, $filter,$location, dataService) {
     $scope.product = {};
-    
-    dataService.getProducts().then(function (resp) {
+    var prodId=0;
+    dataService.getItems(prodId).then(function (resp) {
         //var prodList = [];
-        $scope.products = resp.data;
+        $scope.productItems = resp.data;
     });
-
-    //Data.get('products').then(function(data){
-    //    $scope.products = data.data;
-    //});
 
     $scope.changeProductStatus = function(product){
         product.status = (product.status=="Active" ? "Inactive" : "Active");
@@ -53,16 +49,18 @@ app.controller('productsCtrl', function ($scope, $modal, $filter,$location, data
     };
     
  $scope.columns = [
-                    {text:"Product ID",predicate:"product_id",sortable:true,dataType:"number"},
-                    {text:"Product Name",predicate:"product_name",sortable:true},
-                    {text:"Stocks",predicate:"stocks",sortable:true},
-                     {text:"View",predicate:"view",sortable:true}
+                    {text:"Item ID",predicate:"item_id",sortable:true,dataType:"number"},
+                    {text:"Quantity",predicate:"qty",sortable:true},
+                    {text:"Buy Price",predicate:"buy_price",sortable:true},
+                     {text:"Sell Price",predicate:"sell_price",sortable:true},
+                     {text:"Expiry Date",predicate:"expiry",sortable:true},
+                     {text:"Vendor",predicate:"vendor",sortable:true},
+                     {text:"Total Amount",predicate:"amount",sortable:true}
                 ];
 
 });
 
-
-app.controller('productEditCtrl', function ($scope, $modalInstance, item, Data) {
+app.controller('productItemsEditCtrl', function ($scope, $modalInstance, item, Data) {
 
   $scope.product = angular.copy(item);
         
@@ -103,21 +101,6 @@ app.controller('productEditCtrl', function ($scope, $modalInstance, item, Data) 
             }
         };
 });
-
-
-//app.service('dataService', function($http, $location) {
-//    this.getProducts = function () {
-//        var url = $location.protocol() + "://" + $location.host() + ":" + $location.port() + '/stocks/v1/products';
-//        $http.get(url)
-//    .success(function (data) {
-//            return data;
-//        })
-//    .error(function (err) {
-//            return err;
-//        });
-//    }
-//});
-
 
 
 //Refer
