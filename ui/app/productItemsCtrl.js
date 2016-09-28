@@ -67,8 +67,8 @@ app.controller('productItemsEditCtrl', function ($scope, $modalInstance, item, D
         $scope.cancel = function () {
             $modalInstance.dismiss('Close');
         };
-        $scope.title = (item.id > 0) ? 'Edit Product' : 'Add Product';
-        $scope.buttonText = (item.id > 0) ? 'Update Product' : 'Add New Product';
+        $scope.title = (item.product_id > 0) ? 'Edit Product' : 'Add Product';
+        $scope.buttonText = (item.product_id > 0) ? 'Update Product' : 'Add New Product';
 
         var original = item;
         $scope.isClean = function() {

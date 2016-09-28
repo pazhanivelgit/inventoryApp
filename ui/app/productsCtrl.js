@@ -55,14 +55,15 @@ app.controller('productsCtrl', function ($scope, $modal, $filter,$location, data
  $scope.columns = [
                     {text:"Product ID",predicate:"product_id",sortable:true,dataType:"number"},
                     {text:"Product Name",predicate:"product_name",sortable:true},
+                    {text:"Description",predicate:"Description",sortable:true},
                     {text:"Stocks",predicate:"stocks",sortable:true},
-                     {text:"View",predicate:"view",sortable:true}
+                    {text:"View",predicate:"view",sortable:false},
+                    {text:"Action",predicate:"action",sortable:false}
                 ];
-
 });
 
 
-app.controller('productEditCtrl', function ($scope, $modalInstance, item, Data) {
+app.controller('productEditCtrl', function ($scope, $modalInstance, item) {
 
   $scope.product = angular.copy(item);
         

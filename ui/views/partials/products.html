@@ -1,7 +1,7 @@
 <h4 class="blog-post-title">Products</h4>
 <hr/>
-<button type="button" class="btn btn-danger fa fa-plus" ng-click="open(product);">&nbsp;Add New Product</button>
-
+<button type="button" class="btn btn-primary" ng-click="open(product);">Add</button>
+<div style="margin-top:5px"/>
 <div class="table-responsive">
 <div class="panel panel-primary">
   <div class="panel-heading">List of products
@@ -24,17 +24,19 @@
         <tr ng-repeat="c in products">
             <td>{{c.product_id}}</td>
             <td>{{c.product_name}}</td>
+            <td>{{c.description}}</td>
             <td>{{c.stocks}}</td>
-            <td> <button type="button" class="btn btn-default fa fa-edit" ng-click="go('productItems');"></button></td>
+            <td> <button type="button" class="glyphicon glyphicon-share" ng-click="go('productItems');"></button>
+           </td>
             <!--<td>
             <button class="btn" ng-class="{Active:'btn-success', Inactive:''}[c.status]" ng-click="changeProductStatus(c);">{{c.status}}</button>
         </td>-->
-            <!--<td style="width:100px">
+            <td style="width:100px">
                 <div class="btn-group">
-                    <button type="button" class="btn btn-default fa fa-edit" ng-click="open(c);"></button>
-                    <button type="button" class="btn btn-danger fa fa-trash-o" ng-click="deleteProduct(c);"></button>
+                    <button type="button" class="glyphicon glyphicon-edit" ng-click="open(c);"></button>
+                    <button type="button" class="glyphicon glyphicon-remove" ng-click="deleteProduct(c);"></button>
                 </div>
-            </td>-->
+            </td>
         </tr>
     </table>
 </div>
