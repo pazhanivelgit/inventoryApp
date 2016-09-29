@@ -1,6 +1,9 @@
 app.controller('productItemsCtrl', function ($scope, $modal, $filter,$location, dataService) {
-    $scope.product = {};
-    var prodId=0;
+    var prod=dataService.getProduct();
+    $scope.product_name=prod.product_name;
+    
+    $scope.item = {};
+    var prodId=prod.product_id;
     dataService.getItems(prodId).then(function (resp) {
         //var prodList = [];
         $scope.productItems = resp.data;
@@ -25,8 +28,8 @@ app.controller('productItemsCtrl', function ($scope, $modal, $filter,$location, 
     
     $scope.open = function (p,size) {
         var modalInstance = $modal.open({
-          templateUrl: 'partials/productEdit.html',
-          controller: 'productEditCtrl',
+          templateUrl: 'partials/productItemsEdit.html',
+          controller: 'productItemsEditCtrl',
           size: size,
           resolve: {
             item: function () {
@@ -51,24 +54,27 @@ app.controller('productItemsCtrl', function ($scope, $modal, $filter,$location, 
  $scope.columns = [
                     {text:"Item ID",predicate:"item_id",sortable:true,dataType:"number"},
                     {text:"Quantity",predicate:"qty",sortable:true},
+                    {text:"Free",predicate:"free",sortable:true},
                     {text:"Buy Price",predicate:"buy_price",sortable:true},
                      {text:"Sell Price",predicate:"sell_price",sortable:true},
                      {text:"Expiry Date",predicate:"expiry",sortable:true},
+                     {text:"Buy Date",predicate:"buy",sortable:true},
                      {text:"Vendor",predicate:"vendor",sortable:true},
-                     {text:"Total Amount",predicate:"amount",sortable:true}
+                     {text:"Total",predicate:"amount",sortable:true},
+                     {text:"Action",predicate:"action",sortable:true}
                 ];
 
 });
 
-app.controller('productItemsEditCtrl', function ($scope, $modalInstance, item, Data) {
+app.controller('productItemsEditCtrl', function($scope, $modalInstance, item) {
 
-  $scope.product = angular.copy(item);
+  $scope.item = angular.copy(item);
         
         $scope.cancel = function () {
             $modalInstance.dismiss('Close');
         };
-        $scope.title = (item.product_id > 0) ? 'Edit Product' : 'Add Product';
-        $scope.buttonText = (item.product_id > 0) ? 'Update Product' : 'Add New Product';
+        $scope.title = (item.item_id > 0) ? 'Edit Item' : 'Add Item';
+        $scope.buttonText =(item.item_id > 0) ? 'Update Item' : 'Add New Item';
 
         var original = item;
         $scope.isClean = function() {

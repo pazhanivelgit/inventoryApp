@@ -21,4 +21,14 @@
         });
     }
     
+    var _prod;
+    this.setProduct=function(product)
+    {
+        _prod=product;
+    }
+    
+    this.getProduct=function()
+    {
+        return _prod;
+    }
 });

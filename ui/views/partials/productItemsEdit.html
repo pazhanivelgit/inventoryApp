@@ -1,0 +1,51 @@
+    <button type="button" class="close" ng-click="cancel();">
+        <i class="fa fa-times-circle-o" style="margin:10px;color:blue;"></i>
+    </button>
+    <div class="modal-header">
+        <!--<h3 class="modal-title">{{title}} [ID: {{product.product_id}}]</h3>-->
+        <h3 class="modal-title">{{title}}</h3>
+    </div>
+    <div class="modal-body">
+        <form name="item_form" class="form-horizontal" role="form" novalidate>
+            <form-element label="ITEM ID" mod="item">
+                <input type="text" class="form-control" name="item_id" placeholder="ITEM ID" ng-model="item.item_id" ng-disabled="item_id" focus/>
+            </form-element>
+            <form-element label="QUANTITY" mod="item">
+                <input type="number" class="form-control" name="product_name" placeholder="QUANTITY" ng-model="product.product_name" ng-disabled="product_name" focus/>
+            </form-element>
+            <form-element label="FREE" mod="item">
+                <input type="text" class="form-control" name="product_name" placeholder="FREE" ng-model="product.product_name" ng-disabled="product_name" focus/>
+            </form-element>
+            <form-element label="BUY PRICE" mod="item">
+                <input type="number" class="form-control" name="product_name" placeholder="BUY PRICE" ng-model="product.product_name" ng-disabled="product_name" focus/>
+            </form-element>
+            <form-element label="SELL PRICE" mod="item">
+                <input type="number" class="form-control" name="product_name" placeholder="SELL PRICE" ng-model="product.product_name" ng-disabled="product_name" focus/>
+            </form-element>
+            <form-element label="EXPIRY DATE" mod="item">
+                <input type="date" class="form-control" name="product_name" placeholder="EXPIRY DATE" ng-model="product.product_name" ng-disabled="product_name" focus/>
+            </form-element>
+            <form-element label="RECIVED DATE" mod="item">
+                <input type="date" class="form-control" name="product_name" placeholder="RECIVED DATE" ng-model="product.product_name" ng-disabled="product_name" focus/>
+            </form-element>
+            <form-element label="VENDOR NAME" mod="item">
+                <input type="text" class="form-control" name="product_name" placeholder="VENDOR NAME" ng-model="product.product_name" ng-disabled="product_name" focus/>
+            </form-element>
+            <div class="space"></div>
+            <div class="space-4"></div>
+            <div class="modal-footer">
+                <form-element label="">
+                    <div class="text-right">
+                        <a class="btn btn-sm" ng-click="cancel()"><i class="ace-icon fa fa-reply"></i>Cancel</a>
+                        <button ng-click="saveProduct(product);"
+                                ng-disabled="item_form.$invalid || enableUpdate"
+                                class="btn btn-sm btn-primary"
+                                type="submit">
+                            <i class="ace-icon fa fa-check"></i>{{buttonText}}
+                        </button>
+                    </div>
+                </form-element>
+            </div>
+        </form>
+    </div>
+

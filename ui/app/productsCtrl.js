@@ -22,8 +22,9 @@ app.controller('productsCtrl', function ($scope, $modal, $filter,$location, data
         }
     };
     
-    $scope.go=function(path)
+    $scope.go=function(product,path)
     {
+        dataService.setProduct(product);
         $location.path(path);
     }
     
@@ -33,16 +34,15 @@ app.controller('productsCtrl', function ($scope, $modal, $filter,$location, data
           controller: 'productEditCtrl',
           size: size,
           resolve: {
-            item: function () {
+            item: function() {
               return p;
-              
             }
           }
         });
         modalInstance.result.then(function(selectedObject) {
             if(selectedObject.save == "insert"){
                 $scope.products.push(selectedObject);
-                $scope.products = $filter('orderBy')($scope.products, 'id', 'reverse');
+                $scope.products = $filter('orderBy')($scope.products, 'product_id', 'reverse');
             }else if(selectedObject.save == "update"){
                 p.description = selectedObject.description;
                 p.price = selectedObject.price;
@@ -70,8 +70,8 @@ app.controller('productEditCtrl', function ($scope, $modalInstance, item) {
         $scope.cancel = function () {
             $modalInstance.dismiss('Close');
         };
-        $scope.title = (item.id > 0) ? 'Edit Product' : 'Add Product';
-        $scope.buttonText = (item.id > 0) ? 'Update Product' : 'Add New Product';
+        $scope.title = (item.product_id > 0) ? 'Edit Product' : 'Add Product';
+        $scope.buttonText = (item.product_id > 0) ? 'Update Product' : 'Add New Product';
 
         var original = item;
         $scope.isClean = function() {
