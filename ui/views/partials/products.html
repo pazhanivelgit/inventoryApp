@@ -1,6 +1,20 @@
 <h4 class="blog-post-title">Products</h4>
 <hr/>
+<!--putting in the same row-->
+<div class="row">
+ <div class="col-md-8">   
 <button type="button" class="btn btn-primary" ng-click="open(product);">Add</button>
+ </div>
+ <div class="col-md-4">
+    <div class="input-group">
+    <input type="text" class="form-control" placeholder="Search" ng-model="filterProduct" ng-change="resetLimit();" autocomplete="on" />
+    <span class="input-group-addon">
+        <span class="glyphicon glyphicon-search"></span>
+    </span>
+</div>
+ </div>
+</div>
+<!-- end here.. putting in the same row-->
 <div style="margin-top:5px"/>
 <div class="table-responsive">
 <div class="panel panel-primary">
@@ -21,7 +35,7 @@
     
     <tr><th ng-repeat="c in columns">{{c.text}}</th></tr>
         <!--<tr ng-repeat="c in products | filter:filterProduct | orderBy:'-id'" id="{{c.product_id}}" an animate-on-change='c.packing + c.stock + c.price + c.description' ng-animate=" 'animate'">-->
-        <tr ng-repeat="c in products">
+        <tr ng-repeat="c in products| filter:filterProduct">
             <td>{{c.product_id}}</td>
             <td>{{c.product_name}}</td>
             <td>{{c.description}}</td>
