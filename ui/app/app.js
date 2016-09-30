@@ -13,4 +13,9 @@ app.config(['$routeProvider',
       templateUrl: 'partials/productItems.html',
       controller: 'productItemsCtrl'
     });
-}]);
+    }]);
+
+app.constant('config', {
+    apiUrl: 'http://localhost:8080/v1',
+    baseUrl: '/v1'
+});

@@ -1,9 +1,7 @@
 ﻿'use strict';
 
-var router = require('express').Router();
 var util = require('../public/util');
 var async = require('async');
-var basePath = '/v1';
 
 var exculdeFields = {
     __v: false,
@@ -11,9 +9,29 @@ var exculdeFields = {
 };
 
 
+
+exports.updateProductById = function updateProductById(req, res, next) {
+    var prod_id = req.params.productId;
+    var id = parseInt(prod_id);
+    var product = require("../model/product");
+    product.findOneAndUpdate({ product_id: id }, req.body, function (err, status) {
+        if (err) {
+            res.status(400).json(util.showMessage('error:' + err.name));
+        } else {
+            if (status) {
+                res.status(200).json(util.showMessage('Updated!'));
+            } else {
+                res.status(500).json(util.showMessage('No matching record found'));
+            }
+        }
+    });
+};
+
+
+
 exports.deleteProductById = function deleteProductById(req, res, next) {
-    var cus_id = req.params.productId;
-    var id = parseInt(cus_id);
+    var prod_id = req.params.productId;
+    var id = parseInt(prod_id);
     var product = require("../model/product");
     product.findOneAndRemove({ product_id: id }, function (err,status) {
         if (err) {
@@ -45,7 +63,7 @@ exports.getProductById = function routeGetProductById(req, res, next) {
                     res.status(200).json(product[0]);
                 }
                 else {
-                    res.status(400).json(util.showMessage('No records found!'));
+                    res.status(404).json(util.showMessage('No records found!'));
                 }
             }
         });
@@ -64,11 +82,11 @@ exports.getAllProducts=function routeGetAllProductsRequest(req, res, next) {
             res.status(400).json(util.showMessage('error:' + err.name));
         } else {
             
-            var resp = {
-                'total_count': products.length,
-                'entries': products
-            }
-            res.status(200).json(resp);
+            //var resp = {
+            //    'total_count': products.length,
+            //    'entries': products
+            //}
+            res.status(200).json(products);
         }
     });
 }
@@ -216,8 +234,3 @@ function routeGetInventoryRequest(req, res, next) {
     );
 }
 
-router.get(basePath + '/products/:id', getItemsByProductId);
-router.get(basePath + '/products', routeGetInventoryRequest);
-
-
-module.exports = router;
