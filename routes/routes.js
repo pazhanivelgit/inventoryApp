@@ -4,14 +4,24 @@ var router = require('express').Router();
 //var multipart = require('express-formidable').parse;
 var basePath = '/v1';
 
+
+
+
+
+//for products
 var routeProduct = require('./products_route');
-
-
-
-//for Admin UI
-router.get(basePath + '/products', routeProduct.getAllProducts); // get all customers
-router.post(basePath + '/products', routeProduct.addProduct); // add customers
-router.get(basePath + '/products/:productId', routeProduct.getProductById); // get customer by customer id 
-router.delete(basePath + '/products/:productId', routeProduct.deleteProductById); // delete customer
+router.get(basePath + '/products', routeProduct.getAllProducts); 
+router.post(basePath + '/products', routeProduct.addProduct); 
+router.get(basePath + '/products/:productId', routeProduct.getProductById);  
+router.delete(basePath + '/products/:productId', routeProduct.deleteProductById); 
 router.put(basePath + '/products/:productId', routeProduct.updateProductById); 
+
+// for items
+var routeItem = require('./items_route');
+router.get(basePath + '/products/:productId/items', routeItem.getAllItems); 
+router.post(basePath + '/products/:productId/items', routeItem.addItem); 
+router.get(basePath + '/products/:productId/items/:itemId', routeItem.getItemById);  
+router.delete(basePath + '/products/:productId/items/:itemId', routeItem.deleteItemById); 
+router.put(basePath + '/products/:productId/items/:itemId', routeItem.updateItemById); 
+
 module.exports = router;
