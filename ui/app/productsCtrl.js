@@ -48,9 +48,8 @@ app.controller('productsCtrl', function ($scope, $modal, $filter,$location, data
                 $scope.products = $filter('orderBy')($scope.products, 'product_id', 'reverse');
             }else if(selectedObject.save == "update"){
                 p.description = selectedObject.description;
-                p.price = selectedObject.price;
-                p.stock = selectedObject.stock;
-                p.packing = selectedObject.packing;
+                p.product_id = selectedObject.product_id;
+                p.product_name = selectedObject.product_name;
             }
         });
     };
@@ -72,7 +71,9 @@ app.controller('productEditCtrl', function ($scope, $modalInstance, item, dataSe
         
         $scope.cancel = function () {
             $modalInstance.dismiss('Close');
-        };
+    };
+    
+        $scope.IsUpdate=(item.product_id > 0) ? true : false;
         $scope.title = (item.product_id > 0) ? 'Edit Product' : 'Add Product';
         $scope.buttonText = (item.product_id > 0) ? 'Update Product' : 'Add New Product';
 
@@ -81,8 +82,8 @@ app.controller('productEditCtrl', function ($scope, $modalInstance, item, dataSe
             return angular.equals(original, $scope.product);
         }
         $scope.saveProduct = function(product) {
-        product.uid = $scope.uid;
-        if (product.uid > 0) {
+        //product.uid = $scope.uid;
+        if ($scope.IsUpdate) {
         //if (product.product_id > 0) {
             dataService.UpdateProduct(product).then(function(result) {
                 if (result.status === 200) {
