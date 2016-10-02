@@ -39,8 +39,8 @@ app.controller('productItemsCtrl', function ($scope, $modal, $filter,$location, 
         });
         modalInstance.result.then(function(selectedObject) {
             if(selectedObject.save == "insert"){
-                $scope.products.push(selectedObject);
-                $scope.products = $filter('orderBy')($scope.products, 'id', 'reverse');
+                $scope.items.push(selectedObject);
+                $scope.items = $filter('orderBy')($scope.items, 'product_id', 'reverse');
             }else if(selectedObject.save == "update"){
                 p.item_id=selectedObject.item_id;
                 p.qty=selectedObject.qty;
@@ -90,10 +90,10 @@ app.controller('productItemsEditCtrl', function($scope, $filter,$modalInstance,$
         //issue in binding date.. that is solu
         if($scope.IsUpdate)
         {
+            //$scope.IsItemEnabled=true;
             $scope.item.buy_date = $filter('date')(item.buy_date, "yyyy-MM-dd");
             $scope.item.expiry_date = $filter('date')(item.expiry_date, "yyyy-MM-dd");
         }
-        
         
         $scope.saveItem = function (item) {
             //product.uid = $scope.uid;
