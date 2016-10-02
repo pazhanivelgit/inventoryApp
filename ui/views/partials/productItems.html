@@ -28,8 +28,8 @@
             <td>{{c.free}}</td>
             <td>{{c.buy_price}}</td>
             <td>{{c.sell_price}}</td>
-            <td>{{c.expiry_date}}</td>
-            <td>{{c.buy_date}}</td>
+            <td>{{c.expiry_date|date : 'dd/MM/yyyy'}}</td>
+            <td>{{c.buy_date|date : 'dd/MM/yyyy'}}</td>
             <td>{{c.vendor_name}}</td>
             <td>{{c.buy_price*c.qty}}</td>
             <!--<td>
@@ -38,7 +38,7 @@
         <td style="width:100px">
                 <div class="btn-group">
                     <button type="button" class="glyphicon glyphicon-edit" ng-click="open(c);"></button>
-                    <button type="button" class="glyphicon glyphicon-remove" ng-click="deleteProduct(c);"></button>
+                    <button type="button" class="glyphicon glyphicon-remove" ng-click="deleteItem(c);"></button>
                 </div>
             </td>
         </tr>

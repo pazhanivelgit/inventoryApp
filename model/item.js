@@ -9,7 +9,7 @@ var item_schema = new mongoose.Schema({
     sell_price: Number,
     buy_date: Date,
     expiry_date: Date,
-    vendors:String,
+    vendor_name:String,
     description: String 
 });
 

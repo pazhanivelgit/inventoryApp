@@ -1,7 +1,7 @@
 app.controller('productItemsCtrl', function ($scope, $modal, $filter,$location, dataService) {
     var prod=dataService.getProduct();
+    //var prodId=$route.current.params.productId;
     $scope.product_name=prod.product_name;
-    
     $scope.item = {};
     var prodId=prod.product_id;
     dataService.getItems(prodId).then(function (resp) {
@@ -13,11 +13,11 @@ app.controller('productItemsCtrl', function ($scope, $modal, $filter,$location, 
         product.status = (product.status=="Active" ? "Inactive" : "Active");
         //Data.put("products/"+product.id,{status:product.status});
     };
-    $scope.deleteProduct = function(product){
-        if(confirm("Are you sure to remove the product")){
-            //Data.delete("products/"+product.id).then(function(result){
-            //    $scope.products = _.without($scope.products, _.findWhere($scope.products, {id:product.id}));
-            //});
+    $scope.deleteItem = function(item){
+         if (confirm("Are you sure to remove the product")) {
+            dataService.deleteItem(item).then(function (result) {
+                $scope.items = _.without($scope.items, _.findWhere($scope.items, { item_id: item.item_id}));
+            });
         }
     };
     
@@ -26,7 +26,7 @@ app.controller('productItemsCtrl', function ($scope, $modal, $filter,$location, 
         $location.path(path);
     }
     
-    $scope.open = function (p,size) {
+    $scope.open = function(p,size) {
         var modalInstance = $modal.open({
           templateUrl: 'partials/productItemsEdit.html',
           controller: 'productItemsEditCtrl',
@@ -34,7 +34,6 @@ app.controller('productItemsCtrl', function ($scope, $modal, $filter,$location, 
           resolve: {
             item: function () {
               return p;
-              
             }
           }
         });
@@ -43,10 +42,15 @@ app.controller('productItemsCtrl', function ($scope, $modal, $filter,$location, 
                 $scope.products.push(selectedObject);
                 $scope.products = $filter('orderBy')($scope.products, 'id', 'reverse');
             }else if(selectedObject.save == "update"){
+                p.item_id=selectedObject.item_id;
+                p.qty=selectedObject.qty;
+                p.free=selectedObject.free;
+                p.buy_price=selectedObject.buy_price;
+                p.sell_price=selectedObject.sell_price;
+                p.buy_date=selectedObject.buy_date?new Date(selectedObject.buy_date):new Date();
+                p.expiry_date=selectedObject.expiry_date?new Date(selectedObject.expiry_date):new Date();
+                p.vendor_name=selectedObject.vendor_name;
                 p.description = selectedObject.description;
-                p.price = selectedObject.price;
-                p.stock = selectedObject.stock;
-                p.packing = selectedObject.packing;
             }
         });
     };
@@ -66,44 +70,57 @@ app.controller('productItemsCtrl', function ($scope, $modal, $filter,$location, 
 
 });
 
-app.controller('productItemsEditCtrl', function($scope, $modalInstance, item) {
+app.controller('productItemsEditCtrl', function($scope, $filter,$modalInstance,$document, item,dataService) {
 
   $scope.item = angular.copy(item);
         
         $scope.cancel = function () {
             $modalInstance.dismiss('Close');
         };
+        
+        $scope.IsUpdate=(item.item_id > 0) ? true : false;
         $scope.title = (item.item_id > 0) ? 'Edit Item' : 'Add Item';
         $scope.buttonText =(item.item_id > 0) ? 'Update Item' : 'Add New Item';
 
         var original = item;
         $scope.isClean = function() {
-            return angular.equals(original, $scope.product);
+            return angular.equals(original, $scope.item);
         }
-        $scope.saveProduct = function (product) {
-            product.uid = $scope.uid;
-            if(product.id > 0){
-                //Data.put('products/'+product.id, product).then(function (result) {
-                //    if(result.status != 'error'){
-                //        var x = angular.copy(product);
-                //        x.save = 'update';
-                //        $modalInstance.close(x);
-                //    }else{
-                //        console.log(result);
-                //  }
-                //});
+        
+        //issue in binding date.. that is solu
+        if($scope.IsUpdate)
+        {
+            $scope.item.buy_date = $filter('date')(item.buy_date, "yyyy-MM-dd");
+            $scope.item.expiry_date = $filter('date')(item.expiry_date, "yyyy-MM-dd");
+        }
+        
+        
+        $scope.saveItem = function (item) {
+            //product.uid = $scope.uid;
+            if($scope.IsUpdate){
+          dataService.UpdateItem(item).then(function(result) {
+                if (result.status === 200) {
+                    var x = angular.copy(item);
+                    var buy_date=new Date($document.buy_date);
+                    x.save = 'update';
+                    //x.id = result.data;
+                    $modalInstance.close(x);
+                } else {
+                    console.log(result);
+                }
+            });
             }else{
-                product.status = 'Active';
-                //Data.post('products', product).then(function (result) {
-                //    if(result.status != 'error'){
-                //        var x = angular.copy(product);
-                //        x.save = 'insert';
-                //        x.id = result.data;
-                //        $modalInstance.close(x);
-                //    }else{
-                //        console.log(result);
-                //    }
-                //});
+                item.status = 'Active';
+            dataService.InsertItem(item).then(function (result) {
+                   if(result.status ===200){
+                        var x = angular.copy(item);
+                        x.save = 'insert';
+                        //x.id = result.data;
+                        $modalInstance.close(x);
+                    }else{
+                        console.log(result);
+                    }
+            });
             }
         };
 });

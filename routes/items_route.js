@@ -99,7 +99,7 @@ exports.addItem=function routeItemInsertRequest(req, res, next) {
     var sell_price = req.body.sell_price;
     var buy_date = req.body.buy_date;
     var expiry_date = req.body.expiry_date;
-    var vendors = req.body.vendors||'NA';
+    var vendor_name = req.body.vendor_name||'NA';
     var desc = req.body.description;
 
     if (prod_id && id && qty && expiry_date) {
@@ -124,7 +124,7 @@ exports.addItem=function routeItemInsertRequest(req, res, next) {
         // to insert the datat to db
         var insertData = function(req,next){
             if (req.isItem === 0) {
-                var _item = new item({product_id:prod_id, item_id:id,qty:qty,free:free,buy_price:buy_price,sell_price:sell_price,buy_date:buy_date,expiry_date:expiry_date,vendors:vendors, description:desc});
+                var _item = new item({product_id:prod_id, item_id:id,qty:qty,free:free,buy_price:buy_price,sell_price:sell_price,buy_date:buy_date,expiry_date:expiry_date,vendor_name:vendor_name, description:desc});
                 _item.save(function (err, prodObj) {
                     if (err) {
                         res.status(400).json(err);

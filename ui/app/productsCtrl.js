@@ -1,6 +1,5 @@
 app.controller('productsCtrl', function ($scope, $modal, $filter,$location, dataService) {
     $scope.product = {};
-    
     dataService.getProducts().then(function(resp) {
         //var prodList = [];
         $scope.products = resp.data;
@@ -28,6 +27,7 @@ app.controller('productsCtrl', function ($scope, $modal, $filter,$location, data
     $scope.go=function(product,path)
     {
         dataService.setProduct(product);
+        path='product/'+product.product_id+'/items';
         $location.path(path);
     }
     

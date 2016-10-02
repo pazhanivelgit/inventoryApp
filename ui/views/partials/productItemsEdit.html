@@ -11,25 +11,26 @@
                 <input type="text" class="form-control" name="item_id" placeholder="ITEM ID" ng-model="item.item_id" ng-disabled="item_id" focus/>
             </form-element>
             <form-element label="QUANTITY" mod="item">
-                <input type="number" class="form-control" name="product_name" placeholder="QUANTITY" ng-model="product.product_name" ng-disabled="product_name" focus/>
+                <input type="number" class="form-control" name="qty" placeholder="QUANTITY" ng-model="item.qty" ng-disabled="qty" focus/>
             </form-element>
             <form-element label="FREE" mod="item">
-                <input type="text" class="form-control" name="product_name" placeholder="FREE" ng-model="product.product_name" ng-disabled="product_name" focus/>
+                <input type="text" class="form-control" name="free" placeholder="FREE" ng-model="item.free" ng-disabled="free" focus/>
             </form-element>
             <form-element label="BUY PRICE" mod="item">
-                <input type="number" class="form-control" name="product_name" placeholder="BUY PRICE" ng-model="product.product_name" ng-disabled="product_name" focus/>
+                <input type="number" class="form-control" name="buy_price" placeholder="BUY PRICE" ng-model="item.buy_price" ng-disabled="buy_price" focus/>
             </form-element>
             <form-element label="SELL PRICE" mod="item">
-                <input type="number" class="form-control" name="product_name" placeholder="SELL PRICE" ng-model="product.product_name" ng-disabled="product_name" focus/>
-            </form-element>
-            <form-element label="EXPIRY DATE" mod="item">
-                <input type="date" class="form-control" name="product_name" placeholder="EXPIRY DATE" ng-model="product.product_name" ng-disabled="product_name" focus/>
+                <input type="number" class="form-control" name="sell_price" placeholder="SELL PRICE" ng-model="item.sell_price" ng-disabled="sell_price" focus/>
             </form-element>
             <form-element label="BUY DATE" mod="item">
-                <input type="date" class="form-control" name="product_name" placeholder="RECIVED DATE" ng-model="product.product_name" ng-disabled="product_name" focus/>
+                <!--<input type="date" class="form-control" name="buy_date" min="2013-01-01" max="2016-12-31" placeholder="dd/MM/yyyy" ng-model="item.buy_date" ng-disabled="buy_date" focus/>-->
+            <input type="date" class="form-control" name="buy_date" ng-model="item.buy_date" ng-disabled="buy_date" focus/>
+            </form-element>
+            <form-element label="EXPIRY DATE" mod="item">
+                <input type="date" class="form-control" name="expiry_date" ng-model="item.expiry_date" ng-disabled="expiry_date" focus/>
             </form-element>
             <form-element label="VENDOR NAME" mod="item">
-                <input type="text" class="form-control" name="product_name" placeholder="VENDOR NAME" ng-model="product.product_name" ng-disabled="product_name" focus/>
+                <input type="text" class="form-control" name="vendor_name" placeholder="VENDOR NAME" ng-model="item.vendor_name" ng-disabled="vendor_name" focus/>
             </form-element>
             <div class="space"></div>
             <div class="space-4"></div>
@@ -37,7 +38,7 @@
                 <form-element label="">
                     <div class="text-right">
                         <a class="btn btn-sm" ng-click="cancel()"><i class="ace-icon fa fa-reply"></i>Cancel</a>
-                        <button ng-click="saveProduct(product);"
+                        <button ng-click="saveItem(item);"
                                 ng-disabled="item_form.$invalid || enableUpdate"
                                 class="btn btn-sm btn-primary"
                                 type="submit">
