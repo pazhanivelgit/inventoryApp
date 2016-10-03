@@ -1,19 +1,24 @@
 <h4 class="blog-post-title">Product - {{product_name}}</h4>
 <hr/>
-
+<!--putting in the same row-->
+<div class="row">
+ <div class="col-md-8">   
 <button type="button" class="btn btn-primary" ng-click="open(item);">Add</button>
+ </div>
+ <div class="col-md-4">
+    <div class="input-group">
+    <input type="text" class="form-control" placeholder="Search" ng-model="filterItem" ng-change="resetLimit();" autocomplete="on" />
+    <span class="input-group-addon">
+        <span class="glyphicon glyphicon-search"></span>
+    </span>
+</div>
+ </div>
+</div>
+<!-- end here.. putting in the same row-->
 <div style="margin-top:5px"/>
 <div class="table-responsive">
 <div class="panel panel-primary">
   <div class="panel-heading">List of Items
-      <!--<div class="sw-search" >
-            <div class="nav-search" id="nav-search">
-                    Filter: <span class="input-icon">
-                        <input placeholder="Filter products list ..." class="nav-search-input" ng-model="filterProduct" ng-change="resetLimit();"  autocomplete="off" type="text" style="width:300px;" focus>
-                        <i class="search-icon fa fa-search nav-search-icon"></i>
-                    </span>
-            </div>
-        </div>-->
     </div>
   <div class="panel-body">
     <table class="table table-striped">
@@ -22,7 +27,7 @@
     
     <tr><th ng-repeat="c in columns">{{c.text}}</th></tr>
         <!--<tr ng-repeat="c in products | filter:filterProduct | orderBy:'-id'" id="{{c.product_id}}" an animate-on-change='c.packing + c.stock + c.price + c.description' ng-animate=" 'animate'">-->
-        <tr ng-repeat="c in productItems">
+        <tr ng-repeat="c in productItems| filter:filterItem">
             <td>{{c.item_id}}</td>
             <td>{{c.qty}}</td>
             <td>{{c.free}}</td>

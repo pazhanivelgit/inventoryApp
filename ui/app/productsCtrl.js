@@ -18,16 +18,13 @@ app.controller('productsCtrl', function ($scope, $modal, $filter,$location, data
             dataService.deleteProduct(product).then(function (result) {
                 $scope.products = _.without($scope.products, _.findWhere($scope.products, { product_id: product.product_id}));
             });
-            //Data.delete("products/"+product.id).then(function(result){
-            //    $scope.products = _.without($scope.products, _.findWhere($scope.products, {id:product.id}));
-            //});
         }
     };
     
     $scope.go=function(product,path)
     {
         dataService.setProduct(product);
-        path='product/'+product.product_id+'/items';
+        path='/product/'+product.product_id+'/items';
         $location.path(path);
     }
     
