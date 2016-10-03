@@ -69,7 +69,7 @@
 // Items services
 
    this.getItems = function(prodId) {
-        var url = config.apiUrl+'/products/prodId/items';
+        var url = config.apiUrl+'/products/'+_prod.product_id+'/items';
        return $http.get(url)
     .success(function (data) {
             return data;

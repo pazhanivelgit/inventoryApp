@@ -74,8 +74,13 @@ exports.getItemById = function routeGetItemById(req, res, next) {
 }
 
 exports.getAllItems=function routeGetAllItemsRequest(req, res, next) {
+    var id = req.params.productId;
+    if (id) {
+        
+        var p_id = parseInt(id);
+
     //var item = require("../model/item");
-    item.find({}, util.exculdeFields, function (err, items) {
+    item.find({ product_id: p_id }, util.exculdeFields, function (err, items) {
         if (err) {
             res.status(400).json(util.showMessage('error:' + err.name));
         } else {
@@ -87,6 +92,7 @@ exports.getAllItems=function routeGetAllItemsRequest(req, res, next) {
             res.status(200).json(items);
         }
     });
+    }
 }
 
 

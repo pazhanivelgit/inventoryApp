@@ -74,19 +74,37 @@ exports.getProductById = function routeGetProductById(req, res, next) {
 }
 
 exports.getAllProducts=function routeGetAllProductsRequest(req, res, next) {
-    
+
     var product = require("../model/product");
-    
     product.find({}, util.exculdeFields, function (err, products) {
         if (err) {
             res.status(400).json(util.showMessage('error:' + err.name));
         } else {
-            
             //var resp = {
             //    'total_count': products.length,
             //    'entries': products
             //}
             res.status(200).json(products);
+            // var _products=products;
+            // 
+            //     var item = require("../model/item");
+            //     item.find({}, util.exculdeFields, function (err, items) {
+            //     if (err) {
+            //         res.status(400).json(util.showMessage('error:' + err.name));
+            //     } else {
+            //         
+            //         
+            //         
+            //         //var resp = {
+            //         //    'total_count': items.length,
+            //         //    'entries': items
+            //         //}
+            //         res.status(200).json(items);
+            //     }
+            // });
+
+            
+            //end here
         }
     });
 }

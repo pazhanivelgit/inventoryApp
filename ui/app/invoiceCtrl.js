@@ -15,10 +15,11 @@
     mobile: 8098090009
   },
   company_info: {
-    name: 'Metaware Labs',
-    address1: '123 Yonge Street',
+    name: 'ANANDAM AGENCIES',
+    title:'Whole Sale & Retails Drinks',
+    address1: 'POX NO:2',
     address2: 'Toronto, ON, Canada',
-    mobile: 8098090009
+    mobile:0557231624
   },
   items:[
     {item_id:4932, qty: 10, description: 'Gadget', sell_price: 9.95 }

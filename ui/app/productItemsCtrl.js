@@ -7,6 +7,13 @@ app.controller('productItemsCtrl', function ($scope, $modal, $filter,$location, 
     dataService.getItems(prodId).then(function (resp) {
         //var prodList = [];
         $scope.productItems = resp.data;
+        
+        var total=0;
+        for (var i = 0; i < resp.data.length; i++) {  //loop through the array
+            total += resp.data[i].qty;  //Do the math!
+        }
+        
+        $scope.stock=total;
     });
 
     $scope.changeProductStatus = function(product){
