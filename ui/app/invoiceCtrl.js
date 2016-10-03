@@ -6,23 +6,22 @@
 // The invoice displayed when the user first uses the app
 .constant('DEFAULT_INVOICE', {
   tax: 13.00,
-  invoice_number: 10,
+  discount:2,
+  invoice_id: 10001,
   customer_info: {
-    name: 'Mr. John Doe',
-    web_link: 'John Doe Designs Inc.',
-    address1: '1 Infinite Loop',
-    address2: 'Cupertino, California, US',
-    postal: '90210'
+    name: 'Mr. Babu',
+    address1: 'Anna Nagar,5th Cross',
+    address2: 'Thanjavur',
+    mobile: 8098090009
   },
   company_info: {
     name: 'Metaware Labs',
-    web_link: 'www.metawarelabs.com',
     address1: '123 Yonge Street',
     address2: 'Toronto, ON, Canada',
-    postal: 'M5S 1B6'
+    mobile: 8098090009
   },
   items:[
-    { qty: 10, description: 'Gadget', cost: 9.95 }
+    {item_id:4932, qty: 10, description: 'Gadget', sell_price: 9.95 }
   ]
 })
 
@@ -129,15 +128,16 @@
   function($scope, $http, DEFAULT_INVOICE, DEFAULT_LOGO, LocalStorage, Currency) {
 
   // Set defaults
-  $scope.currencySymbol = '$';
+  $scope.currencySymbol = '﷼';
   $scope.logoRemoved = false;
   $scope.printMode   = false;
 
   (function init() {
     // Attempt to load invoice from local storage
     !function() {
-      var invoice = LocalStorage.getInvoice();
-      $scope.invoice = invoice ? invoice : DEFAULT_INVOICE;
+      //var invoice = LocalStorage.getInvoice();
+      //$scope.invoice = invoice ? invoice : DEFAULT_INVOICE;
+      $scope.invoice =DEFAULT_INVOICE;
     }();
 
     // Set logo to the one from local storage or use default
@@ -179,20 +179,21 @@
   $scope.invoiceSubTotal = function() {
     var total = 0.00;
     angular.forEach($scope.invoice.items, function(item, key){
-      total += (item.qty * item.cost);
+      total += (item.qty * item.sell_price);
     });
     return total;
   };
 
   // Calculates the tax of the invoice
-  $scope.calculateTax = function() {
-    return (($scope.invoice.tax * $scope.invoiceSubTotal())/100);
+  $scope.calculateDiscount = function() {
+    //return (($scope.invoiceSubTotal()-$scope.invoice.discount) );
   };
 
   // Calculates the grand total of the invoice
   $scope.calculateGrandTotal = function() {
-    saveInvoice();
-    return $scope.calculateTax() + $scope.invoiceSubTotal();
+    //saveInvoice();
+    return (($scope.invoiceSubTotal()-$scope.invoice.discount) );
+    //return $scope.calculateDiscount() + $scope.invoiceSubTotal();
   };
 
   // Clears the local storage
@@ -230,7 +231,7 @@
   // Runs on document.ready
   angular.element(document).ready(function () {
     // Set focus
-    document.getElementById('invoice-number').focus();
+    //document.getElementById('invoice-id').focus();
 
     // Changes the logo whenever the input changes
     document.getElementById('imgInp').onchange = function() {
