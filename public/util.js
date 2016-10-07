@@ -35,19 +35,4 @@ exports.isStringBlank=function isStringBlank(str) {
     return (str === undefined || str === null || str.trim().length === 0);
 }
 
-exports.getBOXAPIClient = function getBOXAPIClient(isUser,id) {
-    var sdk = new BoxSDK({
-        clientID: config.CLIENT_ID,
-        clientSecret: config.CLIENT_SECRET,
-        appAuth: {
-            keyID: config.PUBLIC_KEY_ID,
-            privateKey: fs.readFileSync(path.resolve(__dirname, config.PRIVATE_KEY_PATH)),
-            passphrase: config.PRIVATE_KEY_PASSPHRASE
-        }
-    });
-    
-    var userOrEnterprise = isUser?'user':'enterprise';
-    
-    var adminAPIClient = sdk.getAppAuthClient(userOrEnterprise, id);
-    return adminAPIClient;
-}
+
