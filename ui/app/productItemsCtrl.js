@@ -23,7 +23,7 @@ app.controller('productItemsCtrl', function ($scope, $modal, $filter,$location, 
     $scope.deleteItem = function(item){
          if (confirm("Are you sure to remove the product")) {
             dataService.deleteItem(item).then(function (result) {
-                $scope.items = _.without($scope.items, _.findWhere($scope.items, { item_id: item.item_id}));
+                $scope.productItems = _.without($scope.productItems, _.findWhere($scope.productItems, { item_id: item.item_id}));
             });
         }
     };
@@ -46,8 +46,8 @@ app.controller('productItemsCtrl', function ($scope, $modal, $filter,$location, 
         });
         modalInstance.result.then(function(selectedObject) {
             if(selectedObject.save == "insert"){
-                $scope.items.push(selectedObject);
-                $scope.items = $filter('orderBy')($scope.items, 'product_id', 'reverse');
+                $scope.productItems.push(selectedObject);
+                $scope.productItems = $filter('orderBy')($scope.productItems, 'product_id', 'reverse');
             }else if(selectedObject.save == "update"){
                 p.item_id=selectedObject.item_id;
                 p.qty=selectedObject.qty;
