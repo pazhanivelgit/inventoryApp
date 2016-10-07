@@ -13,7 +13,7 @@ var logger = require("./public/logger");
 /**
  * init
  */
-var routes = require('./routes/inventory_routes.js');
+var routes = require('./routes/routes.js');
 var http_server = express();
 
 

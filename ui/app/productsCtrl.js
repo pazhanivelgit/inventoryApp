@@ -1,7 +1,6 @@
 app.controller('productsCtrl', function ($scope, $modal, $filter,$location, dataService) {
     $scope.product = {};
-    
-    dataService.getProducts().then(function (resp) {
+    dataService.getProducts().then(function(resp) {
         //var prodList = [];
         $scope.products = resp.data;
     });
@@ -15,16 +14,17 @@ app.controller('productsCtrl', function ($scope, $modal, $filter,$location, data
         //Data.put("products/"+product.id,{status:product.status});
     };
     $scope.deleteProduct = function(product){
-        if(confirm("Are you sure to remove the product")){
-            //Data.delete("products/"+product.id).then(function(result){
-            //    $scope.products = _.without($scope.products, _.findWhere($scope.products, {id:product.id}));
-            //});
+        if (confirm("Are you sure to remove the product")) {
+            dataService.deleteProduct(product).then(function (result) {
+                $scope.products = _.without($scope.products, _.findWhere($scope.products, { product_id: product.product_id}));
+            });
         }
     };
     
     $scope.go=function(product,path)
     {
         dataService.setProduct(product);
+        path='/product/'+product.product_id+'/items';
         $location.path(path);
     }
     
@@ -45,9 +45,8 @@ app.controller('productsCtrl', function ($scope, $modal, $filter,$location, data
                 $scope.products = $filter('orderBy')($scope.products, 'product_id', 'reverse');
             }else if(selectedObject.save == "update"){
                 p.description = selectedObject.description;
-                p.price = selectedObject.price;
-                p.stock = selectedObject.stock;
-                p.packing = selectedObject.packing;
+                p.product_id = selectedObject.product_id;
+                p.product_name = selectedObject.product_name;
             }
         });
     };
@@ -63,13 +62,15 @@ app.controller('productsCtrl', function ($scope, $modal, $filter,$location, data
 });
 
 
-app.controller('productEditCtrl', function ($scope, $modalInstance, item) {
+app.controller('productEditCtrl', function ($scope, $modalInstance, item, dataService) {
 
   $scope.product = angular.copy(item);
         
         $scope.cancel = function () {
             $modalInstance.dismiss('Close');
-        };
+    };
+    
+        $scope.IsUpdate=(item.product_id > 0) ? true : false;
         $scope.title = (item.product_id > 0) ? 'Edit Product' : 'Add Product';
         $scope.buttonText = (item.product_id > 0) ? 'Update Product' : 'Add New Product';
 
@@ -77,9 +78,20 @@ app.controller('productEditCtrl', function ($scope, $modalInstance, item) {
         $scope.isClean = function() {
             return angular.equals(original, $scope.product);
         }
-        $scope.saveProduct = function (product) {
-            product.uid = $scope.uid;
-            if(product.id > 0){
+        $scope.saveProduct = function(product) {
+        //product.uid = $scope.uid;
+        if ($scope.IsUpdate) {
+        //if (product.product_id > 0) {
+            dataService.UpdateProduct(product).then(function(result) {
+                if (result.status === 200) {
+                    var x = angular.copy(product);
+                    x.save = 'update';
+                    x.id = result.data;
+                    $modalInstance.close(x);
+                } else {
+                    console.log(result);
+                }
+            });
                 //Data.put('products/'+product.id, product).then(function (result) {
                 //    if(result.status != 'error'){
                 //        var x = angular.copy(product);
@@ -90,7 +102,19 @@ app.controller('productEditCtrl', function ($scope, $modalInstance, item) {
                 //  }
                 //});
             }else{
-                product.status = 'Active';
+            product.status = 'Active';
+            
+            dataService.InsertProduct(product).then(function (result) {
+                   if(result.status ===200){
+                        var x = angular.copy(product);
+                        x.save = 'insert';
+                        x.id = result.data;
+                        $modalInstance.close(x);
+                    }else{
+                        console.log(result);
+                    }
+            });
+            
                 //Data.post('products', product).then(function (result) {
                 //    if(result.status != 'error'){
                 //        var x = angular.copy(product);

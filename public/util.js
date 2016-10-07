@@ -1,7 +1,5 @@
 ﻿var config = require('../public/config');
-var path = require('path'),
-    fs = require('fs'),
-    BoxSDK = require('box-node-sdk');
+var path = require('path');
 
 exports.exculdeFields = {
     __v: false,
