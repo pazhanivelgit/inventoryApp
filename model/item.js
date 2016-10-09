@@ -2,7 +2,7 @@
 
 var item_schema = new mongoose.Schema({
     product_id: Number, 
-    item_id: { type: Number, index: true },
+    item_id: { type: String, index: true },
     qty: Number,
     free: String,
     buy_price: Number,

@@ -13,8 +13,8 @@ var exculdeFields = {
 
 exports.updateItemById = function updateItemById(req, res, next) {
     var item_id = req.params.itemId;
-    var id = parseInt(item_id);
-    item.findOneAndUpdate({ item_id: id }, req.body, function (err, status) {
+    //var id = parseInt(item_id);
+    item.findOneAndUpdate({ item_id: item_id }, req.body, function (err, status) {
         if (err) {
             res.status(400).json(util.showMessage('error:' + err.name));
         } else {
@@ -31,9 +31,9 @@ exports.updateItemById = function updateItemById(req, res, next) {
 
 exports.deleteItemById = function deleteItemById(req, res, next) {
     var item_id = req.params.itemId;
-    var id = parseInt(item_id);
+    //var p_id =id;// parseInt(id);
     //var item = require("../model/item");
-    item.findOneAndRemove({ item_id: id }, function (err,status) {
+    item.findOneAndRemove({ item_id: item_id }, function (err,status) {
         if (err) {
             res.status(400).json(util.showMessage('error:' + err.name));
         }else{
@@ -51,7 +51,7 @@ exports.getItemById = function routeGetItemById(req, res, next) {
     var id = req.params.itemId;
     if (id) {
         
-        var i_id = parseInt(id);
+        var p_id =id;// parseInt(id);
         //var item = require("../model/item");
         
         item.find({ item_id: i_id }, util.exculdeFields, function (err, item) {
@@ -75,12 +75,14 @@ exports.getItemById = function routeGetItemById(req, res, next) {
 
 exports.getAllItems=function routeGetAllItemsRequest(req, res, next) {
     var id = req.params.productId;
+    var qry = req.query.q;
     if (id) {
-        
-        var p_id = parseInt(id);
+    var p_id =parseInt(id);
+    var dbqry={$and:[{product_id: p_id},{item_id:{$regex: qry}}]};
+    dbqry=qry?dbqry:{product_id: p_id};
 
-    //var item = require("../model/item");
-    item.find({ product_id: p_id }, util.exculdeFields, function (err, items) {
+    //item.find({ product_id: p_id }, util.exculdeFields, function (err, items) {
+    item.find(dbqry, util.exculdeFields, function (err, items) {
         if (err) {
             res.status(400).json(util.showMessage('error:' + err.name));
         } else {
@@ -94,6 +96,40 @@ exports.getAllItems=function routeGetAllItemsRequest(req, res, next) {
     });
     }
 }
+
+
+exports.getSearchItems=function getSearchItems(req, res, next) {
+    var qry = req.query.q;
+    if (qry) {
+    var dbqry={item_id:{$regex: qry}};
+    item.find(dbqry, util.exculdeFields, function (err, items) {
+        if (err) {
+            res.status(400).json(util.showMessage('error:' + err.name));
+        } else {
+            
+            //var resp = {
+            //    'total_count': items.length,
+            //    'entries': items
+            //}
+            if(items.length>0)
+            {
+            res.status(200).json(items);
+            }
+            else
+            {
+            res.status(404).json(util.showMessage('No records found!'));
+            }
+        }
+    });
+    }
+    else
+    {
+        res.status(400).json(util.showMessage('Invalid params!'));
+
+    }
+}
+
+
 
 
 exports.addItem=function routeItemInsertRequest(req, res, next) {

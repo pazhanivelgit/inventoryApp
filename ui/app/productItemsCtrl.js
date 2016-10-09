@@ -32,6 +32,19 @@ app.controller('productItemsCtrl', function ($scope, $modal, $filter,$location, 
     {
         $location.path(path);
     }
+
+ $scope.search = {'items': []};
+$scope.$watch('searchText', function (val) {
+                var payload = {'q': val};
+                if(val != '' && val != undefined && val.length > 2){
+                   dataService.searchItems(payload).then(function (resp) {
+        //var prodList = [];
+       $scope.search.items = resp.data;
+    });
+}else{
+$scope.search.items = [];
+                }
+            });
     
     $scope.open = function(p,size) {
         var modalInstance = $modal.open({
@@ -85,9 +98,9 @@ app.controller('productItemsEditCtrl', function($scope, $filter,$modalInstance,$
             $modalInstance.dismiss('Close');
         };
         
-        $scope.IsUpdate=(item.item_id > 0) ? true : false;
-        $scope.title = (item.item_id > 0) ? 'Edit Item' : 'Add Item';
-        $scope.buttonText =(item.item_id > 0) ? 'Update Item' : 'Add New Item';
+        $scope.IsUpdate=(item.item_id) ? true : false;
+        $scope.title = (item.item_id) ? 'Edit Item' : 'Add Item';
+        $scope.buttonText =(item.item_id) ? 'Update Item' : 'Add New Item';
 
         var original = item;
         $scope.isClean = function() {

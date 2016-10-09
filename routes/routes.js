@@ -24,4 +24,9 @@ router.get(basePath + '/products/:productId/items/:itemId', routeItem.getItemByI
 router.delete(basePath + '/products/:productId/items/:itemId', routeItem.deleteItemById); 
 router.put(basePath + '/products/:productId/items/:itemId', routeItem.updateItemById); 
 
+//search item
+
+router.get(basePath + '/items/search', routeItem.getSearchItems); 
+
+
 module.exports = router;

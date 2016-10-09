@@ -95,7 +95,7 @@
         <div class="col-xs-12">Customer Info</div>
     </div>
     <div class="row info">
-        <div class="col-xs-12"><input type="text" ng-model="invoice.customer_info.name"/></div>
+        <div class="col-xs-12"><input type="text" ng-model="invoice.customer_info.name" /></div>
         <div class="col-xs-12"><input type="text" ng-model="invoice.customer_info.address1"/></div>
         <div class="col-xs-12"><input type="text" ng-model="invoice.customer_info.address2"/></div>
         <div class="col-xs-12">mob:<input type="text" ng-model="invoice.customer_info.mobile"/></div>
@@ -117,7 +117,21 @@
           <a href ng-hide="printMode" ng-click="removeItem(item)" class="btn btn-danger">[X]</a>
         </div>
         <div class="col-xs-2 input-container">
-          <input ng-model="item.item_id" placeholder="Item"/>
+    <div class="input-group">
+    <input type="text" class="form-control" placeholder="Search" ng-model="searchText" ng-change="searchItem(searchText)" autocomplete="on" />
+    <span ng-show="search.items.length > 0">
+        <ul  ng-repeat="item in search.items">
+        <li>{{ item.item_id}}</li>
+    </ul>
+    </span>
+       </div>
+                </div>
+          <!--<input type="text" ng-model="searchText" ng-change="searchItem(searchText)"/>
+            <div ng-show="search.items.length > 0">
+            <ul  ng-repeat="item in search.items">
+                <li>{{ item.item_id}}</li>
+            </ul>
+        </div>-->
         </div>
         <div class="col-xs-3 input-container">
           <input ng-model="item.description" placeholder="Description" />

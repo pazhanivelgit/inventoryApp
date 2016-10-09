@@ -135,9 +135,18 @@
         });
     }
 
+//search items
+    this.searchItems = function(item) {
+        var url = config.apiUrl+'/items/search?q='+item;
+       return $http.get(url)
+    .success(function (data) {
+            return data;
+        })
+    .error(function (err) {
+            return err;
+        });
+    }
 //end Item service call
-    
-    
     
 //to pass another page    
     var _prod;

@@ -124,9 +124,48 @@
   
 }])
 
+.constant('config', {
+    apiUrl: 'http://localhost:8080/v1',
+    baseUrl: '/v1'
+})
+
+.service('InvoiceDataService', ['$http','config',function($http, config) {
+//search items
+    this.searchItems = function(item) {
+        var url = config.apiUrl+'/items/search?q='+item;
+       return $http.get(url)
+    .success(function (data) {
+            return data;
+        })
+    .error(function (err) {
+            return err;
+        });
+    }
+
+
+}])
+
 // Main application controller
-.controller('InvoiceCtrl', ['$scope', '$http', 'DEFAULT_INVOICE', 'DEFAULT_LOGO', 'LocalStorage', 'Currency',
-  function($scope, $http, DEFAULT_INVOICE, DEFAULT_LOGO, LocalStorage, Currency) {
+.controller('InvoiceCtrl', ['$scope', '$http', 'DEFAULT_INVOICE', 'DEFAULT_LOGO', 'LocalStorage', 'Currency','InvoiceDataService',
+  function($scope, $http, DEFAULT_INVOICE, DEFAULT_LOGO, LocalStorage, Currency,InvoiceDataService) {
+
+$scope.search = {'items': []};
+$scope.searchItem=function(q){
+//$scope.$watch('searchText', function (val) {
+                //var payload = {'q': val};
+                //var qval=q;
+                var val=q;//$scope.searchText;
+                if(val != '' && val != undefined && val.length > 2){
+                   InvoiceDataService.searchItems(val).then(function (resp) {
+        //var prodList = [];
+       $scope.search.items = resp.data;
+    });
+}else{
+$scope.search.items = [];
+                }
+            }//);
+
+
 
   // Set defaults
   $scope.currencySymbol = '﷼';
@@ -229,15 +268,14 @@
     LocalStorage.setInvoice($scope.invoice);
   };
 
-  // Runs on document.ready
-  angular.element(document).ready(function () {
-    // Set focus
-    //document.getElementById('invoice-id').focus();
+  // // Runs on document.ready
+  // angular.element(document).ready(function () {
+  //   // Set focus
+  //   //document.getElementById('invoice-id').focus();
 
-    // Changes the logo whenever the input changes
-    document.getElementById('imgInp').onchange = function() {
-      readUrl(this);
-    };
-  });
-
+  //   // Changes the logo whenever the input changes
+  //   document.getElementById('imgInp').onchange = function() {
+  //     readUrl(this);
+  //   };
+  // });
 }])
